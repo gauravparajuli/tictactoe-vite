@@ -1,5 +1,7 @@
+import Index from './screens/Index';
+
 function App() {
-    return <div className="text-3xl">Hello world!</div>;
+    return <Index />;
 }
 
 export default App;
