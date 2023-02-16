@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Square from './Square';
+import History from './History';
 
 const Board = () => {
     const index = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -19,7 +20,10 @@ const Board = () => {
                 position === index && !item ? (isXTurn ? 'X' : 'O') : item
             )
         );
-        if (!board[position]) setIsXTurn(state => !state);
+        if (!board[position]) {
+            setIsXTurn(state => !state);
+            setGameHistory([...gameHistory, { board, isXTurn }]);
+        }
     };
 
     const checkWinner = () => {
@@ -54,7 +58,7 @@ const Board = () => {
 
     return (
         <div className="grid grid-cols-3 text-white">
-            <div className="col-span-3 text-3xl text-center py-1">
+            <h1 className="col-span-3 text-3xl py-1">
                 {winner
                     ? `${winner} wins the game!`
                     : noMovesLeft
@@ -62,7 +66,7 @@ const Board = () => {
                     : isXTurn
                     ? 'X turn now!'
                     : 'O turn now!'}
-            </div>
+            </h1>
             {index.map(item => (
                 <Square onClick={() => handleSquareClick(item)} key={item}>
                     {board[item]}
@@ -74,6 +78,7 @@ const Board = () => {
                     setBoard(initialState);
                     setWinner(null);
                     setIsXTurn(true);
+                    setGameHistory([]);
                 }}
             >
                 RESET GAME
